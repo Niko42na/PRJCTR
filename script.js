@@ -1,24 +1,52 @@
 `use strict`;
 
-let counter = 20;
+let isHuman = true;
+const age = 31;
 
-// while (counter < -1) {
-// 	console.log('counter is ', counter);
-// 	counter++;
+// if condition
+// if(isHuman && age === 31) {
+// 	console.log('You are human and your age is 31')
+// } else if (!isHuman && age !== 31) {
+// 	console.log('Are you an alien?');
+// } else {
+// 	console.log('Who are you?')
 // }
 
+// тернарний оператор
+// const result = isHuman === true && age === 31 ? 'You are human and your age is 31' : !'Who are you?';
+// console.log(result);
 
-//do...while
+// switch
+// const userName = 'Nata';
+// switch(userName) {
+// 	case 'Natalka':
+// 	case 'Natalyja':
+// 	case 'Nata':
+// 	case 'Nataly':
+// 		welcomeMessage = 'Hello Nataly';
+// 		break;
+// 	case 'Tetiana':
+// 		welcomeMessage = 'Hello Tetiana';
+// 		break;
+// 	case 'Альона':
+// 		welcomeMessage = 'Hello Альона';
+// 		break;
+// 	default:
+// 		welcomeMessage = 'Hello Stranger';
+// 		break;
+// }
+// console.log(welcomeMessage);
 
-// do{
-// 	console.log('counter is ', counter);
-// 	counter++;
-// } while (counter < -1);
+// let userName = 'Petro';
+// let anotherUserName = userName; // 'Petro'
+// anotherUserName = 'Vasyl';
+// console.log(userName); // 'Petro'
+// console.log(anotherUserName); // 'Vasyl'
 
 
-//for...
-
-for(let innerCounter = 0; innerCounter < 100; innerCounter++) {
-	if (innerCounter % 2) continue;
-	console.log('innerCounter --> ', innerCounter);
+// var не має блочної області видимості
+if (isHuman) {
+  var test = 'test value';
 }
+
+console.log(test);
