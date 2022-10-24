@@ -1,2 +1,2 @@
 const userName = 'Mykola';		
-alert(`Hello ${userName}`);
+alert(`Hello ${userName}!`);
