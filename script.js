@@ -104,4 +104,4 @@ const person = {
 // console.log('time: ', end - start);
 
 
-console.log(Date.parse('03 Aug 1985'));
+// console.log(Date.parse('03 Aug 1985'));
