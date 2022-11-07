@@ -1,169 +1,77 @@
 `use strict`;
 
-// 4. Масиви в деталях
+// Основи роботи з функціями
 
-// const users = ["Igor", "Olga", "Petro", "Anna", "Nataly"];
-
-// console.log(Array.isArray('true'));
-
-//CRUD operations
-
-// const users = ["Igor", "Olga", "Petro", "Anna", "Nataly"];
-
-// delete users[2];
-
-// 
-
-
-// length
-
-// const users = ["Igor", "Olga", "Petro", "Anna"];
-
-// console.log(users[users.length-1]);
-
-// console.log(users.at(-1));
-
-// 
-
-// const users = ["Igor", "Olga", "Petro", "Anna"];
-
-// users.shift();
-
-// console.log(users);
-
-
-// const users = ["Igor", "Olga", "Petro", "Anna"];
-
-// for(let index = 0; index < users.length; index++) {
-// 	console.log(users[index]);
-// }
-
-// for (let user of users) {
-// 	console.log(user);
+// function sayHello(name = 'Woman') {
+// 	let bonus = 'mrs';
+// 	console.log(bonus);
+// 	console.log(`Hello ${bonus} ${name}, you get ${100+2} dollars`);
 // }
 
 
-// users.forEach(
-// 	(user, index) => {
-// 		console.log(user + '!')
-// 		console.log('my number is - ', parseInt(index, 10)+1)
+// function squared(number) {
+// 	return number * number;
+// };
+
+// let result = squared(2);
+
+// console.log(result);
+
+// let counter = 0;
+
+// function sayGreeting(age) {
+// 	if (isNaN(+age)) {
+// 		return 'Чи можете ввести число?';
+// 	} else if (age < 18) {
+// 		return 'Привіт!';
+// 	} else if (35 > age) {
+// 		return 'Вітаю!';
+// 	} else {
+// 		return 'Доброго дня';
 // 	}
-// )
+// };
 
-// const users = ["Igor", "Olga", "Petro", "Anna"];
+// const say = sayGreeting(25);
 
-// users.splice(-1, 1);
+// const arr = [1, 2, 3];
 
-// console.log('users --> ', users);
-// console.log('deletedUsers --> ', deletedUsers);
+// const updatedArr = arr.map(num => squared(num));
 
+// let squared = function(number) {
+// 	return number * number;
+// };
 
-// const users = ["Igor", "Olga", "Petro", "Anna"];
+// console.log(updatedArr);
 
-// const specialusers = users.slice();
-// specialusers[4] = 'Ivan'
-// console.log('users --> ', users);
-// console.log('specialusers --> ', specialusers);
+// let age = prompt('Скільки вам років?', 10);
 
-// const users = ["Igor", "Olga", "Petro", "Anna"];
+// let welcome;
 
-// // const specialusers = ;
-
-// const superusers = users.concat(["Ivan", "Vova", "Inna", "Nina"], "John");
-// console.log('users --> ', users);
-// console.log('superusers --> ', superusers);
-
-// const users = ["Igor", "Olga", "Petro", "Anna"];
-
-// const updatedUsers = users.map(
-// 	(userName) => userName.toUpperCase()
-// );
-
-// console.log('users --> ', users);
-// console.log('updatedUsers --> ', updatedUsers);
-
-// users.forEach(
-// 	(userName) => userName.toUpperCase()
-// );
-// console.log('users --> ', users);
-
-// const users = [10, -5 , 16, 24];
-
-// users.sort((a, b) => {
-// 	if (a > b) {
-// 		return 1;
-// 	} else if ( a === b) {
-// 		return 0;
-// 	} else if( a < b) {
-// 		return -1;
+// if (age < 18) {
+// 	welcome = function() {
+// 		console.log('Привіт!');
 // 	}
-// });
+// } else if (35 > age) {
+// 	welcome = function() {
+// 		console.log('Доброго дня!');
+// 	}
+// }
 
-// console.log('users --> ', users);
+// welcome();
 
+// let functionSometheing = (a, b) => {
+// 	let c = a*b*b;
+// 	return c;
+// }; 
 
-// const users = ["Igor", "Olga", "Petro", "Anna", "Olga"];
-
-// const copiedUsers = users.slice();
-// const reversedUsers = copiedUsers.reverse();
-
-// console.log('users --> ', users);
-// console.log('reversedUsers --> ', reversedUsers);
-
-// let userData = ["Koval", "Ivan", "Petrovych"];
-
-// console.log(userData.join(' ').split("", 12));
-
-// const hasNameIvan = userData.includes("Ivan".toUpperCase());
-
-// console.log('hasNameIvan --> ', hasNameIvan);
-
-// const indexOfNameOlga = users.lastIndexOf("Olga");
-
-//  console.log('indexOfNameOlga --> ', indexOfNameOlga);
-
-// const numberValues = [10, -5 , 16, 24, 100, -12, 7];
-
-// const foundNumber = numberValues.find(number => number > 100);
-// const filteredNumbers = numberValues.filter(number => number > 100);
-
-// console.log('foundNumber --> ', foundNumber);
-// console.log('filteredNumbers --> ', filteredNumbers);
-
-// const matrix = [
-// 	[24, 45, 56],
-// 	[12, 56, [90]],
-// 	[89, 41, 73]
-// ]
-
-// const flatMatrix = matrix.flat(Infinity);
-// console.log('flatMatrix --> ', flatMatrix);
+// console.log(sum(4,5));
 
 
-// const users = ["Olga", "Oleg", "Olga"];
+function recSumTo(number) {
+	if(number === 1) {
+		return 1;
+	}
+	return number + recSumTo(number-1);
+}
 
-// const startsWithP = users.some((userName) => userName[0] === 'F');
-// console.log('startsWithP --> ', startsWithP);
-
-// const allStartWithO = users.every((userName) => userName[0] === 'O');
-// console.log('allStartWithO --> ', allStartWithO);
-
-// const numberValues = [10, -5 , 16, 24, 100, -12, 7];
-
-// const initValue = 0;
-
-// const sumOfValues = numberValues.reduce(
-// 	(prev, current) => prev + current,
-// 	initValue
-// )
-
-// console.log('sumOfValues --> ', sumOfValues);
-
-
-// const users = ["Olga", "Oleg", "Olga"];
-
-// let user1 = users[0];
-// let user2 = users[1];
-
-// let [user1, user2, user3] = users;
-//
+console.log(recSumTo(10));
