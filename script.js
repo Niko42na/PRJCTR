@@ -1,107 +1,570 @@
 `use strict`;
 
-// 5. Об'єкти в деталях
+// замикання - робота над помилками
 
-let id = Symbol("unique person id");
-// let anotherId = Symbol("unique person id");
+	// кейс перший - простий
 
-// console.log(anotherId === id);
+		// let test = 666;
 
-const person = {
-	name: 'Anton',
-	age: 56,
-	mainRole: 'admin',
-	isOnline: false,
-	roles: ["user", "support", "admin"],
-	sayHi: () => {console.log("Hello there!")},
-	params: {
-		height: 175,
-		weight: 85,
-	},
-	[id]: 666,
-	'some secret': true,
-};
+		// function a() {
+		//   console.log(test);
+		// }
 
-// const key = {key: 'isOnline'};
+		// function b() {
+		//   let test = 777;
+		//   console.log(test);
+		// }
 
-// key = 'isOffline';
-// const initObject = {name: 'Oleg'};
-// const secondObject = new Object({name: 'Anna'})
+		// test = 888;
 
-// delete person.mainRole;
-// // console.log(initObject)
-// // console.log(secondObject)
+		// a(); // 888 
+		// b(); // 777
 
-// console.log(person);
+	// кейс другий - складніший
 
-// let isThereSomeHeight = 'height' in person.params;
+		// let test = 666;
 
-// console.log(isThereSomeHeight);
+		// function a() {
+		//   console.log(test);
+		// }
+
+		// function b() {
+		//   let test = 777;
+		//   a();  
+		// }
+
+		// b();
+
+	// кейс третій - складніший
+
+		// let test = 666;
+
+		// function b() {
+		//   let test = 777;
+		//   function a() {
+		//     console.log(test);
+		//   }
+		//   a(); 
+		// }
+
+		// b();
+
+// setTimeout 
+
+	// function sayHi(phrase, who) {
+	//   console.log( phrase + ', ' + who );
+	// }
+
+	// setTimeout(sayHi(), 7000, "Hello", "Petro");
+
+	// або
+
+	// setTimeout((phrase, who) => console.log( phrase + ', ' + who ), 5000, "Hello", "Petro");
+
+	// приклад clearTimeout
+
+	// function sayHi(phrase, who) {
+	//   console.log( phrase + ', ' + who );
+	// }
+
+	// let delay = 2000;
+
+	// let timerId = setTimeout(sayHi, delay, "Hello", "Petro");
+	// console.log('timerId -', timerId);
+	// clearTimeout(timerId);
+
+// setInterval
+
+	// function sayHi(phrase, who) {
+	//   console.log( phrase + ', ' + who );
+	// }
+
+	// let timerId = setInterval(sayHi, 2000, "Hello", "Petro");
+
+	// setTimeout(() => { clearInterval(timerId); console.log('stop'); }, 10000);
+
+	// альтернатива - вкладений setTimeout
+
+		// простий приклад
+
+			// let timerId = setTimeout(function tick() {
+			//   console.log('ping');
+			//   timerId = setTimeout(tick, 2000); // ось вкладений setTimeout
+			// }, 2000);
+
+		// практичний приклад  - сервіс з гнучкою витримкою часу запитів на бекенд
+
+			// let delay = 5000; // витримка часу по якій будуть робитись запити 
+
+			// let timerId = setTimeout(function request() {
+			//   // логіка яка робить запит на бекенд
+
+			//   if (/* якась помилка запиту на бекенд */) {
+			//     // збільшуємо витримку часу
+			//     delay *= 2;
+			//   }
+
+			//   timerId = setTimeout(request, delay);
+
+			// }, delay);
+
+				// частковий приклад - setTimeout з нульовою затримкою
+				// Це планує виклик func настільки швидко, наскільки це можливо. Але планувальник викликатиме функцію лише після завершення виконання поточного коду.
+
+					// setTimeout(() => console.log("Moto"));
+
+					// console.log("Hello");
+
+			// setTimeout(()=> console.log(1));  // 2
+			// setTimeout(()=> console.log(2));  // 3
+
+			// console.log(3) // 1
+
+			// setTimeout(()=> console.log(4)); // 4
+
+// методи об'єктів
+
+	// Приклади написання методів об'єктів
+
+	// const user = {
+	// 	name: 'Helga',
+	// 	gender: 'female',
+	// 	age: 43
+	// }
+
+	// варіант 1
+
+			// const user = {
+			//   name: 'Helga',
+			//   gender: 'female',
+			//   age: 43
+			// }
+
+			// user.sayPhrase = function(phrase) {
+			//   console.log(phrase);
+			// }
+
+			// user.sayPhrase('Привіт!')
+
+	// варіант 2
+
+			// function sayPhrase(phrase) {
+			//   console.log(phrase);
+			// }
+
+			// user.sayPhrase = sayPhrase;
+
+			// user.sayPhrase('Здоров!');
+
+	// 	// варіант 3
+
+			// const user = {
+			//   name: 'Helga',
+			//   gender: 'female',
+			//   age: 43,
+			//   sayPhrase: function(phrase) {
+			//   	console.log(phrase);
+			//   }
+			// }
+
+			// user.sayPhrase('Що там?');
+
+	// 	// варіант 4
+
+			// const user = {
+			//   name: 'Helga',
+			//   gender: 'female',
+			//   age: 43,
+			//   sayPhrase(phrase) {
+			//   	console.log(phrase);
+			//   }
+			// }
+
+			// user.sayPhrase('Як там?');
 
 
-// for (key in person) {
-// 	console.log(typeof key);
-// };
+	// // Ключове слово`this`
+
+			// const user = {
+			//   name: 'Helga',
+			//   gender: 'female',
+			//   age: 43,
+			//   introduce() {
+			//   	console.log(`My name is ${this.name}!`);
+			//   }
+			// }
+
+			// user.introduce();
+
+	// 	// приклад чому не варто використовувати пряме посилання
+
+			// let user = {
+			//   name: 'Helga',
+			//   gender: 'female',
+			//   age: 43,
+			//   introduce() {
+			//     console.log(`My name is ${user.name}!`);
+			//   }
+			// }
+
+			// let anotherUser = user;
+			// user = null;
+
+			// anotherUser.introduce();
+
+	// // `this` не є фіксованим, воно обчислюється залежно від місця виконання коду
+
+		//  let user = {
+		//   name: 'Helga',
+		//   gender: 'female',
+		//   age: 43,
+		//   introduce() {
+		//     console.log(`My name is ${this.name}!`);
+		//   }
+		// }
+
+		// let anotherUser = {
+		//   name: 'Derek',
+		//   gender: 'male',
+		//   age: 35,
+		//   introduce() {
+		//     console.log(`My name is ${this.name}!`);
+		//   }
+		// };
+
+		// user.introduce();
+		// anotherUser.introduce();
 
 
-// person?.params?.weight = 45;
+	// // `this` відсутній у стрілкових функцій, вони беруть this з оточення
+		
+		// let user = {
+		// 	name: "Derek",
+		// 	gender: 'male',
+		// 	roles: ["admin", "user", "husband"],
+		// 	age: 35,
+		// 	introduce() {
+		// 		let arrow = () => console.log(`My name is ${this.name}!`);
+		// 		arrow();
+		// 	},
+		// 	showRoles() {
+		// 	    this.roles.forEach(role => console.log(`One of my roles - \'${role}\'`));
+		// 	},
+		// };
 
-// console.log(person.params);
-
-// console.log(Object.keys(person));
-
-
-// console.log(Object.entries(person));
-
-// let capsPerson = Object.fromEntries(
-//   Object.entries(person).map(([key, value]) => [key.toUpperCase(), value])
-// );
-
-// console.log(capsPerson);
-
-// capsPerson.SAYHI()
-
-// console.log(person[id]);
-
-// console.log(typeof null);
-
-// if (
-// 	typeof person === 'object' && 
-// 	person !== null &&
-// 	!Array.isArray(person)
-// ) {
-// 	console.log('its object');
-// }
-
-// let anotherPerson =JSON.parse(JSON.stringify(person));
-
-// anotherPerson.name = 'Oleg';
-
-// anotherPerson.params.height = 180;
-
-// console.log(person);
-// console.log(anotherPerson);
-
-// Object.freeze(person);
-
-// person.name = 'Nataly';
-
-// console.log(person);
-
-// let someDate = new Date().setDate(25);
-
-// console.log(someDate);
-
-// let start = performance.now();
-
-// for (let i = 0; i < 100000000; i++) {
-// 	++person[id]
-// }
-
-// let end = performance.now();
-
-// console.log(person[id]);
-// console.log('time: ', end - start);
+		// user.introduce();
+		// user.showRoles();
 
 
-// console.log(Date.parse('03 Aug 1985'));
+		// let introduceRealName = () => {
+		// 	console.log(`My real name is ${this.someSecretName}`);
+		// }
+
+		// globalThis.someSecretName = 'Oleg';
+
+		// introduceRealName(); // Oleg
+
+// контекст виконання
+
+		// проблема втрати контексту
+
+			// let user = {
+			//   firstName: "Василь",
+			//   sayHi() {console.log(`Мене звати ${this.firstName}!`);
+			//   }
+			// };
+
+			// // user.sayHi();
+
+			// setTimeout(user.sayHi,1000)
+
+		// Ненадійне рішення - використання функцій-обгорток
+			
+			// let user = {
+			// 	firstName: "Василь",
+			// 	sayHi() { console.log(`Мене звати ${this.firstName}!`);}
+			// };
+
+			// setTimeout(function(){user.sayHi()}, 1000)
+
+			// або 
+
+				// let user = {
+				//   firstName: "Василь",
+				//   sayHi() {
+				//     console.log(`Мене звати	${this.firstName}!`);
+				//   }
+				// };
+
+				// setTimeout(() => user.sayHi(), 1000)
+
+			// демонстрація ненадійності
+
+				// let user = {
+				//   firstName: "Василь",
+				//   sayHi() { 
+				//   	console.log(`Мене звати ${this.firstName}!`);
+				//   }
+				// };
+
+				// setTimeout(() => user.sayHi(), 1000)
+
+				// user = {
+				// 	sayHi() {
+				// 		console.log('Nope!')
+				// 	}
+				// }
+
+			// надійне рішення - bind
+
+				// let user = {
+				//   firstName: "Василь",
+				//   sayHi() {
+				//     console.log(`Мене звати ${this.firstName}!`);
+				//   }
+				// };
+
+				// let bindedSayHi = user.sayHi.bind(user);
+
+				// setTimeout(bindedSayHi, 1000)
+
+				// user = {
+				// 	sayHi() {
+				// 		console.log('Nope!')
+				// 	}
+				// }
+
+			// bind при потребі може прив'язувати тільки `this` та не впливати на аргументи
+
+				// let user = {
+				//   firstName: "Василь",
+				//   sayHi() {
+				//     console.log(`Мене звати ${this.firstName}!`);
+				//   },
+				//   sayPhrase(phrase) { 
+				//   	console.log(`${phrase} ${this.firstName}!`);
+				//   }
+				// };
+
+				// let bindedSayHi = user.sayHi.bind(user);
+				// let bindedSayPhrase = user.sayPhrase.bind(user);
+
+				// setTimeout(bindedSayHi, 1000)
+
+				// bindedSayPhrase('Здоров');
+
+			// При потребі можемо прив'язувати аргументи
+
+				// let user = {
+				//   firstName: "Василь",
+				// };
+
+				// function sayPhrase(phrase) {
+				//   console.log(`${phrase} ${this.firstName}!`);
+				// }
+
+				// let bindedSayHi = sayPhrase.bind(user,'Привіт');
+				// let bindedSayBye = sayPhrase.bind(user, 'Бувай');
+
+				// setTimeout(bindedSayBye, 1000)
+
+				// bindedSayHi();
+
+				// let user = {
+				//   firstName: "Василь",
+				// };
+
+				// function say(phrase = 'Та й таке') {
+				// 	console.log(`${phrase} ${this.firstName}`);
+				// }
+
+				// let bindedSay = say.bind(user, 'То є жичє');
+
+				// bindedSay('Жизнь то така вещь'); // Василь
+
+
+// call / apply
+
+	// const book1 = {
+	// 	title: 'Brave New World',
+	// 	author: 'Aldous Huxley',
+	// }
+
+	// const book2 = {
+	// 	title: '1984',
+	// 	author: 'George Orwell',
+	// }
+
+	// function summary() {
+	// 	console.log(`${this.title} was written by ${this.author}.`)
+	// }
+
+
+	// summary.bind(book1)();
+	// summary.bind(book2)();
+	// summary.call(book1);
+
+	// summary.apply(book2);
+
+
+
+	// розгляд карірування з цими методами
+
+		// function longerSummary(genre, year) {
+		// 	console.log(
+		// 	`${this.title} was written by ${this.author}. It is a ${genre} novel written in ${year}.`
+		// 	)
+		// }
+
+		// longerSummary.call(book1, 'dystopian', 1932)
+
+		// longerSummary.apply(book2, ['dystopian', 1948])
+
+	// Практичний приклад - як можна позичати методи
+
+		// function minimisedSummary(...args) {
+		//   console.log( [].join.call(args, ', ') );
+		// }
+
+		// minimisedSummary('1984', 'George Orwell') // "1984, George Orwell"
+		// minimisedSummary('Brave New World', 'Aldous Huxley', 'dystopian', 1932) // "Brave New World, Aldous Huxley, dystopian, 1932"
+
+
+	// пРАТКИЧНИЙ ПРИКЛАД - патерн 'декоратор'
+	// Розберемо цей приклад для розуміння
+
+		// function someFunction(a, b) {
+		//   console.log( a + b );
+		// }
+
+		// function logger(func) {
+
+		//   function wrapper(...args) { 	// оголошуємо функцію яка приймає аргументи масивом
+		//     wrapper.logs.push(	// у користувацьку властивість ми пушимо
+		// 	    { 		
+		// 	    	args: args, // присвоюємо властовості 'args' масив args 
+		// 	      	timeStamp: new Date(), // додаємо поточний момент
+		// 	    }
+		//     );
+		//     return func.apply(this, args); // повертаємо виклик базової функції з її аргументами
+		//   }
+
+		//   wrapper.logs = []; // оголошуємо свою властивість для функції і присвоюємо їй порожній масив
+
+		//   return wrapper;
+		// }
+
+		// const loggedFunction = logger(someFunction);
+
+
+		// function showLogs(logs) {
+		// 	for (let log of logs) {
+		//     	console.log( logs );
+		//   	}
+		// }
+
+		// loggedFunction(1, 2);
+		// loggedFunction(4, 5);
+		// showLogs(loggedFunction.logs);
+
+	// інший практичний Приклад - каррінг
+	// Розберемо цей приклад для розуміння
+		// function curry(func) { 					// оголошуємо функцію та передаємо в неї функцію
+
+		//   return function curried(...args) {	// повертаємо функцію яка приймає аргументи функції curried масивом
+		//     if (args.length >= func.length) {	// оголошуємо умову порівняння кількості аргументів
+		//       return func.apply(this, args);	// якщо аргументів більше або дорівнює то ми повертаємо 
+		//       									// базову функцію з привязкою до цього контексту та
+		//       									// аргументами які передали у функцію curried
+		//     } else {							// або
+		//       return function(...args2) {		// повертаємо безіменну функцію яка приймає аргументи функції масивом 
+		//         return curried.apply(this, args.concat(args2)); // повертаємо функцію curried з привязкою до поточного
+		//         								// контексту і з масивом аргументів який складається з 
+		//         								// об'єднаних мамсисвів аргументів функцій curried і поточної
+		//       }
+		//     }
+		//   };
+
+		// }
+
+		// function sum(a, b, c) {
+		//   return a + b + c;
+		// }
+
+		// let curriedSum = curry(sum);
+
+		// console.log( curriedSum(1, 2, 3) ); 
+		// console.log( curriedSum(1)(2,3) );
+		// console.log( curriedSum(1,2)(3) );
+		// console.log( curriedSum(1)(2)(3) );
+
+		// Користувацькі властивості
+			// їх можна використовувати замість замикання: 
+
+				// function makeCounter() {
+
+				//   function counter() {
+				//     return ++counter.count;
+				//   };
+
+				//   counter.count = 0;
+
+				//   return counter;
+				// }
+
+				// let counter = makeCounter();
+
+				// counter.count = 10;
+				// console.log(counter()); // 11
+				// console.log(counter()); // 12 
+
+		// 		Основна відмінність у тому, що якщо значення count живе у зовнішній змінній, воно не доступне для зовнішнього коду. Змінити його можуть лише вкладені функції. Якщо ж воно присвоєно як властивість функції, ми можемо його отримати чи змінити ззовні
+
+		// // Named Function Expression
+		// 	// ось звичайна FE
+
+				// let sayHi = function(who) {
+				//   console.log(`Hello, ${who}`);
+				// };
+
+				// sayHi("Ivan"); 
+
+		// 	// ось NFE
+
+				// let sayHi = function func(who) {
+				//   console.log(`Hello, ${who}`);
+				// };
+
+				// sayHi("Ivan");
+
+		// 	// дозволяє 
+		// 	// посилатись на саму себе
+
+			// let sayHi = function func(who) {
+			//   if (who) {
+			//     console.log(`Hello, ${who}`);
+			//   } else {
+			//    func("Guest");
+			//   }
+			// };
+
+			// sayHi(); // Hello, Guest
+			// sayHi('Alyona');
+
+			// func(); // помилка func не доступна за межами функції
+
+		// 	// приклад реалізації захисту від перезапису
+
+				// let sayHi = function func(who) {
+				//   if (who) {
+				//     console.log(`Hello, ${who}`);
+				//   } else {
+				//    sayHi("Guest");
+				//   }
+				// };
+
+				// let welcome = sayHi;
+				// sayHi = null;
+
+				// welcome();
+				// sayHi();
