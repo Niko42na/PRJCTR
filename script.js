@@ -1,133 +1,69 @@
-`use strict`;
+'use strict';
 
-// Продвинута робота з функціями
+// Основи роботи з DOM (1)
 
-// Про контекст виконання на приклад рекурсії та ітерації
-
-// ітеративна сума
-
-// function iterativeSum(x) {
-// 	// console.log('iterativeSum x - ', x);
-//   	let result = 0;
-// 	for (let i = 0; i <= x; i++) {
-// 		result += i;
-// 	}
-// 	return result;
+// function sayHi() {
+//   console.log("Здоров");
 // }
-// console.log(iterativeSum(5));
 
-// рекурсивна сума
+// window.sayHi();
 
-// function recursiveSum(x) {
-// 	console.log('recursiveSum x --> ', x);
-// 	if (x === 1) {
-// 		return x;
-// 	}
-// 	return x+recursiveSum(x-1);
-// }
-// console.log(recursiveSum(5));
+// document.body.style.backgroundColor = "red";
+// setTimeout(() => document.body.style.background = 'lightblue', 3000);
 
-// залишкові параметри та оператор розширення
-
-	// function simpleSum(a, b, ...args) {
-	//   console.log('arguments - ', arguments);
-	//   let sum = a + b;
-	//   for (let arg of args) {
-	//   	sum += arg;
-	//   }
-	//   return sum;
-	// }
-	// console.log(simpleSum(1,2,3,4,12,23));
-
-	// let arr1 = [1, -2, 3, 4];
-	// let arr2 = [8, 3, -8, 12];
-	// console.log( Math.max(1, ...arr1, 2, ...arr2) ); 
-
-	// let number = `456`;
-	// console.log([...number] );
-
-// замикання
-
-	// let price1 = 1;
-
-	// function simpleSum(a, b) {
-	// 	let innerPrice = 2;
-	//   	return a + b + innerPrice;
-	// }
-	// price1 = 3;
-	// let innerPrice = 20;
-	// console.log(simpleSum(price1));
+// elem.childNodes[0] === elem.firstChild
+// elem.childNodes[elem.childNodes.length - 1] === elem.lastChild
 
 
-	// function makeWorker() {
-	//   let name = "Петро";
-	//   return function() {
-	//     console.log(name);
-	//   };
-	// }
-	// let name = "Іван";
-	// // create a function
-	// let work = makeWorker();
-	// // call it
-	// work();
+// console.log(Array.from(document.body.childNodes).sort());
 
-// створення декількох каунтерів
+// console.log(document.body.nextSibling)
 
-	// function makeCounter() {
-	// 	let count = 0;
-
-	// 	return function() {
-	// 		return ++count;
-	// 	};
-	// }
-
-	// let counter = makeCounter();
-
-	// console.log( counter() );  // 1
-	// console.log( counter() );  // 2
-	// console.log( counter() );  // 3
-
-	// let counter2 = makeCounter();
-
-	// console.log( counter2() );  
-	// console.log( counter2() );  
-	// console.log( counter2() ); 
-
-//IIFE
-	// (function() {
-	// 	console.log('Hi')
-	// })();
-
-// глобальний об'єкт
-
-	// globalThis.nextTargets = {
-	// 	city: 'Moskow'
-	// }
-
-	// console.log(globalThis.nextTargets.city);
-
-// об'єкт функції
-
-	// function recursiveSum(x, y, ...z) {
-	// 	console.log('recursiveSum x --> ', x);
-	// 	if (x === 1) {
-	// 		return x;
-	// 	}
-	// 	return x+recursiveSum(x-1);
-	// }
-
-	// console.log(recursiveSum.length);
+// console.log(document.body.children);
+// console.log(document.body.firstElementChild);
+// console.log(document.body.lastElementChild);
+// console.log(document.body.previousElementSibling);
+// console.log(document.head.nextElementSibling);
 
 
-	// function sayHi() {
-	// 	// console.log('callingCounter', callingCounter);
-	// 	sayHi.callingCounter++;
-	// }
+// пошук в ДОМ дереві
 
-	// sayHi.callingCounter = 0;
+// let element = document.getElementById('headerTwo');
+// headerTwo.style.color = "yellow";
 
-	// sayHi();
-	// sayHi();
-	// sayHi();
+// let hTwoElements = document.body.getElementsByTagName('h2');
+// console.log(hTwoElements);
 
-	// console.log('sayHi.callingCounter -- ', sayHi.callingCounter);
+// let spanElements = document.body.getElementsByTagName('span');
+// console.log(spanElements);
+
+// let textClassElements = document.body.getElementsByClassName('text');
+// console.log(textClassElements);
+
+// let element1 = document.querySelector('ul');
+// let element2 = document.querySelector('span');
+// console.log(element1.contains(element2));
+
+// let searchedSection = document.getElementsByName('firstSection');
+
+// console.log(searchedSection);
+
+// let newElement = document.createElement('div');
+// newElement.className = 'newElement';
+// newElement.innerHTML = '<b>Здоров!</b>';
+
+// document.querySelector('.firstSection').insertAdjacentElement('beforebegin', '<b>Здоров!</b>');
+// document.querySelector('.firstSection').insertAdjacentElement('afterbegin', '<b>Як справи?</b>');
+// document.querySelector('.firstSection').insertAdjacentElement('beforeend', '<b>Як життя?</b>');
+// document.querySelector('.firstSection').insertAdjacentElement('afterend', '<b>Бувай!</b>');
+
+// let clone = document.querySelector('.firstSection').cloneNode(false);
+
+
+// headerTwo.remove();
+
+// document.body.style.cssText = `color: blue`;
+
+// console.log(document.body.style.cssText);
+
+// console.log(getComputedStyle(document.body));
