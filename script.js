@@ -1,123 +1,151 @@
 'use strict';
 
-// Основи роботи з DOM (2)
+// ООП в JS 1
 
-// const settings = {
-//     backgroundColor: '#fff',
-//     color: '#111',
-//     theme: 'light'
-// };
-
-// localStorage.setItem('settings', JSON.stringify(settings));
-
-// console.log(localStorage.getItem('settings'));
-
-
-// кастомні атрибути
-
-// let bar = document.querySelector('#main');
-// console.log(bar.dataset);
-
-// основні властивості
-
-// let textElement = document.querySelector('.text');
-// textElement.hidden = true;
-// divElement.outerHTML = '<section>Новий чудовий елемент</section>'; 
-
-
-// console.log(divElement.nodeValue);
-
-// elem.textContent = 'Щось нове';
-
-
-// події
-
-// let redBtn = document.querySelector('.redBtn'); // знаходимо кнопку
-// let counter = localStorage.getItem('russophobiaLevel') || 0; // пробуємо взяти значен з локалСтораджа або ж присвоюємо нуль
-// let hatredLevel = document.querySelector('.hatredLevelCounter'); // знаходимо каунтер
-// hatredLevel.textContent = counter + '👿'; // присвоюємо значення текст контенту каунтера 
-
-// function updateAndShowRussophobiaLevel(event) { // оголошуємо функцію
-// 	counter++; // збільшуємо наш каунтер
-//     console.log(`Current russophobia level: ${counter}`);
-//     console.log(`It is not high enough! 👿`);
-//     localStorage.setItem('russophobiaLevel', counter); // записуємо в локал сторадж
-//     hatredLevel.textContent = counter+'👿'; // присвоюємо значення текст контенту каунтера
+// const Fomo = {
+//     name: "Ali",
+//     species: "alien",
+//     sayPhrase: () => console.log("I'm Ali the alien!"),
+//     fly: () => console.log("Zzzzzziiiiiinnnnnggggg!!")
 // }
 
-// redBtn.addEventListener('click',updateAndShowRussophobiaLevel);
+// const Sunny = {
+//     name: "Buggy",
+//     species: "bug",
+//     sayPhrase: () => console.log("Your debugger doesn't work with me!"),
+//     hide: () => console.log("You can't catch me now!")
+// }
+
+// const Human = {
+//     name: "Tito",
+//     species: "human",
+//     sayPhrase: () => console.log("I can cook, swim and dance!"),
+//     yell: () => console.log("Make humanity great again!")
+// }
+// Fomo.sayPhrase();
+// Human.yell();
+
+// приклад користі ООП
+
+    // class Alien { 
+    //     constructor (name, phrase) {
+    //         this.name = name,
+    //         this.phrase = phrase,
+    //         this.species = "alien"
+    //     }
+    //     fly = () => console.log("Zzzzzziiiiiinnnnnggggg!!");
+    //     sayPhrase = () => console.log(this.phrase);
+    // }
+    // class Bug {
+    //     constructor (name, phrase) {
+    //         this.name = name
+    //         this.phrase = phrase
+    //         this.species = "bug"
+    //     }
+    //     hide = () => console.log("You can't catch me now!");
+    //     sayPhrase = () => console.log(this.phrase);
+    // }
+    // class Human {
+    //     constructor (name, phrase) {
+    //         this.name = name
+    //         this.phrase = phrase
+    //         this.species = "human"
+    //     }
+    //     yell = () => console.log("Make humanity great again!");
+    //     sayPhrase = () => console.log(this.phrase);
+    // }
+    // const alien1 = new Alien("Ali", "I'm Ali the alien!")
+    // const alien2 = new Alien("Lien", "Run for your lives!")
+    // const bug1 = new Bug("Buggy", "Your debugger doesn't work with me!")
+    // const bug2 = new Bug("Erik", "I drink decaf!")
+    // const human1 = new Human("Tito", "I can cook, swim and dance!")
+    // const human2 = new Human("John Cena", "Hasta la vista, baby!")
+    // alien2.sayPhrase();
+    // human2.sayPhrase();
 
 
-// let link = document.querySelector('a');
+// Основні принципи ООП на прикладах
 
-// link.addEventListener('click',function(event) {
-//     console.log('clicked');
-//     event.preventDefault();
-// });
-
-// let redBtn = document.querySelector('.redBtn');
-
-// redBtn.addEventListener('click', function(event) {
-//     console.log(`It is not high enough! 👿`);
-//     event.stopPropagation();
-// });
-
-// document.body.addEventListener('click',function(event) {
-//     console.log('The body was clicked!');
-//     console.log(`It is not high enough! 👿`);
-// });
-
-
-// let redBtn = document.querySelector('.redBtn');
-// redBtn.onclick = function() {
-//     console.log(this.nodeName); 
-// };
-
-
-// dispatchEvent
-
-// let btn = document.querySelector('.redBtn');
-
-// btn.addEventListener('click', function (event) {
-//     console.log('Mouse Clicked');
-//     console.log('event is Trusted -->', event.isTrusted);
-// });
-
-// let clickEvent = new Event('click');
-// btn.dispatchEvent(clickEvent);
-
-
-// кастомні події
-
-function highlight(elem) {
-    const bgColor = 'blue';
-    elem.style.backgroundColor = bgColor;
-
-    // create the event
-    let event = new CustomEvent('highlight', {
-        detail: {
-            backgroundColor: bgColor
+// Успадкування
+// можливість створювати класи з урахуванням інших класів. 
+// За допомогою цього принципу можна визначати батьківський клас (з потрібними властивостями та методами), а потім дочірній клас, який успадковуватиме від батька всі властивості та методи.
+    class Character {
+        constructor (speed) {
+            this.speed = speed
         }
-    });
-    // dispatch the event
-    elem.dispatchEvent(event);
-}
+        move = () => console.log(`I'm moving at the speed of ${this.speed}!`)
+    }
 
-// Select the button element
-let redBtn = document.querySelector('.redBtn');
+    class Enemy extends Character {
+        constructor(name, phrase, power, speed) {
+            super(speed)
+            this.name = name
+            this.phrase = phrase
+            this.power = power
+        }
+        sayPhrase = () => console.log(this.phrase)
+        attack = () => console.log(`I'm attacking with a power of ${this.power}!`)
+    }
 
-// Add border style
-function addBorder(elem) {
-    elem.style.border = "solid 1px red";
-}
+    class Alien extends Enemy {
+        #birthYear
+        constructor (name, phrase, power, speed, birthYear) {
+            super(name, phrase, power, speed)
+            this.species = "alien"
+            this.#birthYear = birthYear
+        }
+        fly = () => console.log("Zzzzzziiiiiinnnnnggggg!!")
+        howOld = () => console.log(`I was born in ${this.#birthYear}`)
+        attack = () => console.log("I'm pacifist")
+    }
 
-// Listen to the highlight event
-redBtn.addEventListener('highlight', function (e) {
-    addBorder(this);
+    class Bug extends Enemy {
+        constructor (name, phrase, power, speed) {
+            super(name, phrase, power, speed)
+            this.species = "bug"
+        }
+        hide = () => console.log("You can't catch me now!")
+    }
 
-    // examine the background
-    console.log(e.detail);
-});
+    class Human extends Enemy {
+        constructor (name, phrase, power, speed) {
+            super(name, phrase, power, speed)
+            this.species = "human"
+        }
+        yell = () => console.log("Make humanity great again!")
+    }
 
-// highlight redBtn element
-highlight(redBtn);
+
+    const alien1 = new Alien("Ali", "I'm Ali the alien!", 10, 50)
+    const alien2 = new Alien("Lien", "Run for your lives!", 15, 60)
+    const bug1 = new Bug("Buggy", "Your debugger doesn't work with me!", 25, 100)
+    const bug2 = new Bug("Erik", "I drink decaf!", 5, 120)
+    const human1 = new Human("Tito", "I can cook, swim and dance!", 125, 30)
+    const human2 = new Human("John Cena", "Hasta la vista, baby!", 155, 40)
+
+    alien1.attack();
+
+// Інкапсуляція
+// означає здатність об'єкта «вирішувати», яку інформацію він розкриватиме для зовнішнього світу, а яку ні. Реалізується цей принцип через публічні та закриті властивості та методи.
+
+    const alien3 = new Alien("Gnu", "I'm Gnu the alien!", 11, 55, 2022);
+    alien3.howOld();
+    console.log(alien3);
+
+// Поліморфізм
+// відображає здатність методу повертати різні значення, згідно з певними умовами
+    // є базований на параметрах (приклад  - 'sayPhrase' у класі 'Enemy')
+    // є через перевизначення батьківського методу (приклад - 'attack' у класі 'Alien')
+
+// композиція
+// за допомогою композиції можна надавати властивості та методи об'єктам більш гнучким способом, в результаті якого вони отримують лише те, що потрібно, та нічого зайвого.
+
+    const bug3 = new Bug("Bud", "Ha-ha", 35, 125)
+
+    const addFlyingAbility = obj => {
+        obj.fly = () => console.log(`Now ${obj.name} can fly!`)
+    }
+
+    addFlyingAbility(bug3);
+
+    bug3.fly();
