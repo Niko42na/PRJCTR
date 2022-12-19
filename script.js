@@ -1,151 +1,299 @@
 'use strict';
 
-// ООП в JS 1
+// ООП в JS 2
 
-// const Fomo = {
-//     name: "Ali",
-//     species: "alien",
-//     sayPhrase: () => console.log("I'm Ali the alien!"),
-//     fly: () => console.log("Zzzzzziiiiiinnnnnggggg!!")
+// const numbers = [1,2,3,4,5,6,7,8,9];
+
+// Array.prototype.shuffle = function() {
+//     return this.sort(function() {
+//         return Math.round(Math.random()*2) - 1;
+//     });
+// };
+
+// console.log(numbers.shuffle());
+
+// const decNumbers = Array(10,20,30,40,50,60,70,80,90);
+
+// console.log(decNumbers.shuffle());
+
+// експеримент 1
+
+// Array.prototype.hello = () => "hello";
+
+// console.log(numbers.hello());
+
+// console.log(decNumbers.hello());
+
+// експеримент 2
+
+    // класова реалізація
+    // class Person {
+    //   constructor(firstName, lastName) {
+    //     this.firstName = firstName
+    //     this.lastName = lastName
+    //   }
+    //   getFullName() {
+    //     return this.firstName + ' ' + this.lastName
+    //   }
+    // }
+
+    // class User extends Person {
+    //   constructor(firstName, lastName, email, password) {
+    //     super(firstName, lastName)
+    //     this.email = email
+    //     this.password = password
+    //    }
+    //    getEmail() {
+    //      return this.email
+    //    }
+    //    getPassword() {
+    //      return this.password
+    //    }
+    // }
+
+    // let user1 = new User('John','Cena','john@cena.com', 'iLuvWWE');
+
+    // console.log(user1.getEmail());
+
+    // прототипна реалізація 
+
+    // function Person(firstName, lastName) {
+    //   this.firstName = firstName;
+    //   this.lastName = lastName;
+    // }
+
+    // Person.prototype.getFullName = function () {
+    //   return this.firstName + ' ' + this.lastName;
+    // }
+
+    // function User(firstName, lastName, email, password) {
+    //   // call super constructor:
+    //   Person.call(this, firstName, lastName);
+    //   this.email = email;
+    //   this.password = password;
+    // }
+    // User.prototype = Object.create(Person.prototype);
+    // User.prototype.setEmail = function(email) {
+    //   this.email = email;
+    // }
+    // User.prototype.getEmail = function() {
+    //   return this.email;
+    // }
+
+    // let user2 = new User('John','Cena','john@cena.com', 'iLuvWWE');
+
+    // console.log(user2.getFullName());
+
+
+// приклад 'S' 
+
+// class TodoList {
+//     constructor() {
+//         this.items = []
+//     }
+
+//     addItem(text) {
+//         this.items.push(text)
+//     }
+
+//     removeItem(index) {
+//         this.items = items.splice(index, 1)
+//     }
+
+//     toString() {
+//         return this.items.toString()
+//     }
 // }
 
-// const Sunny = {
-//     name: "Buggy",
-//     species: "bug",
-//     sayPhrase: () => console.log("Your debugger doesn't work with me!"),
-//     hide: () => console.log("You can't catch me now!")
+// class DatabaseManager {
+//     saveToFile(data, filename) {
+//         fs.writeFileSync(filename, data.toString())
+//     }
+
+//     loadFromFile(filename) {
+//         // якась логіка
+//     }
 // }
 
-// const Human = {
-//     name: "Tito",
-//     species: "human",
-//     sayPhrase: () => console.log("I can cook, swim and dance!"),
-//     yell: () => console.log("Make humanity great again!")
+// приклад для 'О'
+
+// class Coder {
+//   constructor(fullName, language, hobby, education, workplace, position) {
+//     this.fullName = fullName
+//     this.language = language
+//     this.hobby = hobby
+//     this.education = education
+//     this.workplace = workplace
+//     this.position = position
+//   }
 // }
-// Fomo.sayPhrase();
-// Human.yell();
 
-// приклад користі ООП
+// створили масив кодерів з класу coder
 
-    // class Alien { 
-    //     constructor (name, phrase) {
-    //         this.name = name,
-    //         this.phrase = phrase,
-    //         this.species = "alien"
-    //     }
-    //     fly = () => console.log("Zzzzzziiiiiinnnnnggggg!!");
-    //     sayPhrase = () => console.log(this.phrase);
-    // }
-    // class Bug {
-    //     constructor (name, phrase) {
-    //         this.name = name
-    //         this.phrase = phrase
-    //         this.species = "bug"
-    //     }
-    //     hide = () => console.log("You can't catch me now!");
-    //     sayPhrase = () => console.log(this.phrase);
-    // }
-    // class Human {
-    //     constructor (name, phrase) {
-    //         this.name = name
-    //         this.phrase = phrase
-    //         this.species = "human"
-    //     }
-    //     yell = () => console.log("Make humanity great again!");
-    //     sayPhrase = () => console.log(this.phrase);
-    // }
-    // const alien1 = new Alien("Ali", "I'm Ali the alien!")
-    // const alien2 = new Alien("Lien", "Run for your lives!")
-    // const bug1 = new Bug("Buggy", "Your debugger doesn't work with me!")
-    // const bug2 = new Bug("Erik", "I drink decaf!")
-    // const human1 = new Human("Tito", "I can cook, swim and dance!")
-    // const human2 = new Human("John Cena", "Hasta la vista, baby!")
-    // alien2.sayPhrase();
-    // human2.sayPhrase();
+// class CoderFilter {
+//     filterByName(coders, fullName) {
+//         return coders.filter(coder => coder.fullName === fullName)
+//     }
+
+//     filterBySize(coders, language) {
+//         return coders.filter(coder => coder.language === language)
+//     }
+
+//     filterByHobby(coders, hobby) {
+//         return coders.filter(coder => coder.hobby === hobby)
+//     }
+// }
+
+// const filterByProp = (array, propName, value) => 
+//     array.filter(element => element[propName] === value)
 
 
-// Основні принципи ООП на прикладах
+// приклад для 'L'
 
-// Успадкування
-// можливість створювати класи з урахуванням інших класів. 
-// За допомогою цього принципу можна визначати батьківський клас (з потрібними властивостями та методами), а потім дочірній клас, який успадковуватиме від батька всі властивості та методи.
-    class Character {
-        constructor (speed) {
-            this.speed = speed
-        }
-        move = () => console.log(`I'm moving at the speed of ${this.speed}!`)
-    }
+// class Rectangle {
+//     constructor(width, height) {
+//         this.width = width
+//         this.height = height
+//     }
 
-    class Enemy extends Character {
-        constructor(name, phrase, power, speed) {
-            super(speed)
-            this.name = name
-            this.phrase = phrase
-            this.power = power
-        }
-        sayPhrase = () => console.log(this.phrase)
-        attack = () => console.log(`I'm attacking with a power of ${this.power}!`)
-    }
+//     getWidth() {
+//         return this.width
+//     }
+//     getHeight() {
+//         return this.height
+//     }
 
-    class Alien extends Enemy {
-        #birthYear
-        constructor (name, phrase, power, speed, birthYear) {
-            super(name, phrase, power, speed)
-            this.species = "alien"
-            this.#birthYear = birthYear
-        }
-        fly = () => console.log("Zzzzzziiiiiinnnnnggggg!!")
-        howOld = () => console.log(`I was born in ${this.#birthYear}`)
-        attack = () => console.log("I'm pacifist")
-    }
+//     setWidth(value) {
+//         this.width = value
+//     }
+//     setHeight(value) {
+//         this.height = value
+//     }
 
-    class Bug extends Enemy {
-        constructor (name, phrase, power, speed) {
-            super(name, phrase, power, speed)
-            this.species = "bug"
-        }
-        hide = () => console.log("You can't catch me now!")
-    }
+//     getArea() {
+//         return this.width * this.height
+//     }
+// }
 
-    class Human extends Enemy {
-        constructor (name, phrase, power, speed) {
-            super(name, phrase, power, speed)
-            this.species = "human"
-        }
-        yell = () => console.log("Make humanity great again!")
-    }
+// class Square extends Rectangle {
+//     constructor(size) {
+//         super(size, size)
+//     }
 
+//     setWidth(value) {
+//         this.width = this.height = value
+//     }
 
-    const alien1 = new Alien("Ali", "I'm Ali the alien!", 10, 50)
-    const alien2 = new Alien("Lien", "Run for your lives!", 15, 60)
-    const bug1 = new Bug("Buggy", "Your debugger doesn't work with me!", 25, 100)
-    const bug2 = new Bug("Erik", "I drink decaf!", 5, 120)
-    const human1 = new Human("Tito", "I can cook, swim and dance!", 125, 30)
-    const human2 = new Human("John Cena", "Hasta la vista, baby!", 155, 40)
+//     setHeight(value) {
+//         this.width = this.height = value
+//     }
+// }
 
-    alien1.attack();
+// const square = new Square(2);
 
-// Інкапсуляція
-// означає здатність об'єкта «вирішувати», яку інформацію він розкриватиме для зовнішнього світу, а яку ні. Реалізується цей принцип через публічні та закриті властивості та методи.
+// square.setWidth(3);
 
-    const alien3 = new Alien("Gnu", "I'm Gnu the alien!", 11, 55, 2022);
-    alien3.howOld();
-    console.log(alien3);
+// console.log(square.getArea());
 
-// Поліморфізм
-// відображає здатність методу повертати різні значення, згідно з певними умовами
-    // є базований на параметрах (приклад  - 'sayPhrase' у класі 'Enemy')
-    // є через перевизначення батьківського методу (приклад - 'attack' у класі 'Alien')
+// приклад для `I`
 
-// композиція
-// за допомогою композиції можна надавати властивості та методи об'єктам більш гнучким способом, в результаті якого вони отримують лише те, що потрібно, та нічого зайвого.
+// class Phone {
+//   constructor() {
+//     if (this.constructor.name === 'Phone')
+//       throw new Error('Phone class is absctract')
+//   }
 
-    const bug3 = new Bug("Bud", "Ha-ha", 35, 125)
+//   call(number) {}
 
-    const addFlyingAbility = obj => {
-        obj.fly = () => console.log(`Now ${obj.name} can fly!`)
-    }
+//   takePhoto() {}
 
-    addFlyingAbility(bug3);
+//   connectToWifi() {}
+// }
 
-    bug3.fly();
+// class IPhone extends Phone {
+//   call(number) {
+//     // працює
+//   }
+
+//   takePhoto() {
+//     // працює
+//   }
+
+//   connectToWifi() {
+//     // працює
+//   }
+// }
+
+// class Nokia3310 extends Phone {
+//   call(number) {
+//     // працює
+//   }
+
+//   takePhoto() {
+//     // не має камери
+//   }
+
+//   connectToWifi() {
+//     // не має wifi модулю
+//   }
+// }
+
+// приклад для 'D'
+
+// class FileSystem {
+//   writeToFile(data) {
+//     //  якась логіка
+//   }
+// }
+
+// class ExternalDB {
+//   writeToDatabase(data) {
+//     // якась логіка
+//   }
+// }
+
+// class LocalPersistance {
+//   push(data) {
+//     //  якась логіка
+//   }
+// }
+
+// class PersistanceManager {
+//   saveData(db, data) {
+//     if (db instanceof FileSystem) {
+//       db.writeToFile(data)
+//     }
+
+//     if (db instanceof ExternalDB) {
+//       db.writeToDatabase(data)
+//     }
+
+//     if (db instanceof LocalPersistance) {
+//       db.push(data)
+//     }
+//   }
+// }
+
+// class FileSystem {
+//   save(data) {
+//     // якась логіка
+//   }
+// }
+
+// class ExternalDB {
+//   save(data) {
+//     // якась логіка
+//   }
+// }
+
+// class LocalPersistance {
+//   save(data) {
+//     // якась логіка
+//   }
+// }
+
+// class PersistanceManager {
+//   saveData(db, data) {
+//     db.save(data)
+//   }
+// }
