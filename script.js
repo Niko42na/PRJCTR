@@ -1,299 +1,111 @@
 'use strict';
 
-// ООП в JS 2
+// setTimeout(function greet() {
+//   console.log('Good day, user!');
+// }, 5000);
 
-// const numbers = [1,2,3,4,5,6,7,8,9];
-
-// Array.prototype.shuffle = function() {
-//     return this.sort(function() {
-//         return Math.round(Math.random()*2) - 1;
-//     });
-// };
-
-// console.log(numbers.shuffle());
-
-// const decNumbers = Array(10,20,30,40,50,60,70,80,90);
-
-// console.log(decNumbers.shuffle());
-
-// експеримент 1
-
-// Array.prototype.hello = () => "hello";
-
-// console.log(numbers.hello());
-
-// console.log(decNumbers.hello());
-
-// експеримент 2
-
-    // класова реалізація
-    // class Person {
-    //   constructor(firstName, lastName) {
-    //     this.firstName = firstName
-    //     this.lastName = lastName
-    //   }
-    //   getFullName() {
-    //     return this.firstName + ' ' + this.lastName
-    //   }
-    // }
-
-    // class User extends Person {
-    //   constructor(firstName, lastName, email, password) {
-    //     super(firstName, lastName)
-    //     this.email = email
-    //     this.password = password
-    //    }
-    //    getEmail() {
-    //      return this.email
-    //    }
-    //    getPassword() {
-    //      return this.password
-    //    }
-    // }
-
-    // let user1 = new User('John','Cena','john@cena.com', 'iLuvWWE');
-
-    // console.log(user1.getEmail());
-
-    // прототипна реалізація 
-
-    // function Person(firstName, lastName) {
-    //   this.firstName = firstName;
-    //   this.lastName = lastName;
-    // }
-
-    // Person.prototype.getFullName = function () {
-    //   return this.firstName + ' ' + this.lastName;
-    // }
-
-    // function User(firstName, lastName, email, password) {
-    //   // call super constructor:
-    //   Person.call(this, firstName, lastName);
-    //   this.email = email;
-    //   this.password = password;
-    // }
-    // User.prototype = Object.create(Person.prototype);
-    // User.prototype.setEmail = function(email) {
-    //   this.email = email;
-    // }
-    // User.prototype.getEmail = function() {
-    //   return this.email;
-    // }
-
-    // let user2 = new User('John','Cena','john@cena.com', 'iLuvWWE');
-
-    // console.log(user2.getFullName());
+// console.log("I'm being called before greet function.");
 
 
-// приклад 'S' 
+// - чому код в 7 рядку виконався раніше за 4
+// - куди поділось виконання коду з рядка 4
+// - як воно розуміє що треба виводити код з 4 рядка
 
-// class TodoList {
-//     constructor() {
-//         this.items = []
-//     }
 
-//     addItem(text) {
-//         this.items.push(text)
-//     }
+// стек викликів
 
-//     removeItem(index) {
-//         this.items = items.splice(index, 1)
-//     }
+// function outer() {
+//     function inner() {
+//         // 3
+//         console.log('Hello!')
+//     };
 
-//     toString() {
-//         return this.items.toString()
-//     }
+//     // 2
+//     inner();
 // }
 
-// class DatabaseManager {
-//     saveToFile(data, filename) {
-//         fs.writeFileSync(filename, data.toString())
-//     }
+// // 1
+// outer();
 
-//     loadFromFile(filename) {
-//         // якась логіка
-//     }
+// приклад асинхронного коду і його стеку
+
+// function main() {
+//   setTimeout(function greet() {
+//     console.log('Hello!')
+//   }, 2000)
+
+//   console.log('Bye!');
 // }
 
-// приклад для 'О'
+// main();
 
-// class Coder {
-//   constructor(fullName, language, hobby, education, workplace, position) {
-//     this.fullName = fullName
-//     this.language = language
-//     this.hobby = hobby
-//     this.education = education
-//     this.workplace = workplace
-//     this.position = position
-//   }
+// цикл подій
+
+        // СТЕК                                        WEB API                                 Черга задач     
+
+// пекло колбеків
+
+// setTimeout(() => {
+//   setTimeout(() => {
+//     setTimeout(() => {
+//       setTimeout(() => {
+//         console.log('Hello!')
+//       }, 5000)
+//     }, 5000)
+//   }, 5000)
+// }, 5000)
+
+
+        // function request(url, onSuccess) {
+        //   /*...*/
+        // }
+
+        // request('/api/users/1', function (user) {
+        //   request(`/api/photos/${user.id}/`, function (photo) {
+        //     request(`/api/crop/${photo.id}/`, function (response) {
+        //       console.log(response)
+        //     })
+        //   })
+        // })
+
+//fetch
+
+// const textEditorState = {
+//   lastModified: "2023-01-09T12:15:00",
+//   blocks: [
+//     {
+//       type: "heading",
+//       data: {
+//         text: "Плани на 2023"
+//       }
+//     },
+//     {
+//       type: "paragraph",
+//       data: {
+//         text: "Перемога"
+//       }
+//     }
+//   ]
 // }
 
-// створили масив кодерів з класу coder
-
-// class CoderFilter {
-//     filterByName(coders, fullName) {
-//         return coders.filter(coder => coder.fullName === fullName)
-//     }
-
-//     filterBySize(coders, language) {
-//         return coders.filter(coder => coder.language === language)
-//     }
-
-//     filterByHobby(coders, hobby) {
-//         return coders.filter(coder => coder.hobby === hobby)
-//     }
-// }
-
-// const filterByProp = (array, propName, value) => 
-//     array.filter(element => element[propName] === value)
+// const response = await fetch('/api/save-text', {
+//    method: 'POST',
+//    body: JSON.stringify(textEditorState),
+// })
 
 
-// приклад для 'L'
+// REST
 
-// class Rectangle {
-//     constructor(width, height) {
-//         this.width = width
-//         this.height = height
-//     }
+            // Наприклад, метод та адреса для створення користувача
+            // могли б виглядати так:
+            // POST /api/users
 
-//     getWidth() {
-//         return this.width
-//     }
-//     getHeight() {
-//         return this.height
-//     }
+            // Для отримання конкретного користувача:
+            // GET /api/users/1
+            // (Де 1 - це ID користувача.)
 
-//     setWidth(value) {
-//         this.width = value
-//     }
-//     setHeight(value) {
-//         this.height = value
-//     }
+            // Для редагування даних про користувача:
+            // PATCH /api/users/1
 
-//     getArea() {
-//         return this.width * this.height
-//     }
-// }
-
-// class Square extends Rectangle {
-//     constructor(size) {
-//         super(size, size)
-//     }
-
-//     setWidth(value) {
-//         this.width = this.height = value
-//     }
-
-//     setHeight(value) {
-//         this.width = this.height = value
-//     }
-// }
-
-// const square = new Square(2);
-
-// square.setWidth(3);
-
-// console.log(square.getArea());
-
-// приклад для `I`
-
-// class Phone {
-//   constructor() {
-//     if (this.constructor.name === 'Phone')
-//       throw new Error('Phone class is absctract')
-//   }
-
-//   call(number) {}
-
-//   takePhoto() {}
-
-//   connectToWifi() {}
-// }
-
-// class IPhone extends Phone {
-//   call(number) {
-//     // працює
-//   }
-
-//   takePhoto() {
-//     // працює
-//   }
-
-//   connectToWifi() {
-//     // працює
-//   }
-// }
-
-// class Nokia3310 extends Phone {
-//   call(number) {
-//     // працює
-//   }
-
-//   takePhoto() {
-//     // не має камери
-//   }
-
-//   connectToWifi() {
-//     // не має wifi модулю
-//   }
-// }
-
-// приклад для 'D'
-
-// class FileSystem {
-//   writeToFile(data) {
-//     //  якась логіка
-//   }
-// }
-
-// class ExternalDB {
-//   writeToDatabase(data) {
-//     // якась логіка
-//   }
-// }
-
-// class LocalPersistance {
-//   push(data) {
-//     //  якась логіка
-//   }
-// }
-
-// class PersistanceManager {
-//   saveData(db, data) {
-//     if (db instanceof FileSystem) {
-//       db.writeToFile(data)
-//     }
-
-//     if (db instanceof ExternalDB) {
-//       db.writeToDatabase(data)
-//     }
-
-//     if (db instanceof LocalPersistance) {
-//       db.push(data)
-//     }
-//   }
-// }
-
-// class FileSystem {
-//   save(data) {
-//     // якась логіка
-//   }
-// }
-
-// class ExternalDB {
-//   save(data) {
-//     // якась логіка
-//   }
-// }
-
-// class LocalPersistance {
-//   save(data) {
-//     // якась логіка
-//   }
-// }
-
-// class PersistanceManager {
-//   saveData(db, data) {
-//     db.save(data)
-//   }
-// }
+            // Для видалення даних:
+            // DELETE /api/users/1
