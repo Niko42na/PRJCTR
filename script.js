@@ -1,111 +1,243 @@
 'use strict';
 
-// setTimeout(function greet() {
-//   console.log('Good day, user!');
-// }, 5000);
+// приклад створення промісу і обробки успішного запиту
 
-// console.log("I'm being called before greet function.");
-
-
-// - чому код в 7 рядку виконався раніше за 4
-// - куди поділось виконання коду з рядка 4
-// - як воно розуміє що треба виводити код з 4 рядка
-
-
-// стек викликів
-
-// function outer() {
-//     function inner() {
-//         // 3
-//         console.log('Hello!')
-//     };
-
-//     // 2
-//     inner();
-// }
-
-// // 1
-// outer();
-
-// приклад асинхронного коду і його стеку
-
-// function main() {
-//   setTimeout(function greet() {
-//     console.log('Hello!')
-//   }, 2000)
-
-//   console.log('Bye!');
-// }
-
-// main();
-
-// цикл подій
-
-        // СТЕК                                        WEB API                                 Черга задач     
-
-// пекло колбеків
-
-// setTimeout(() => {
-//   setTimeout(() => {
-//     setTimeout(() => {
-//       setTimeout(() => {
-//         console.log('Hello!')
-//       }, 5000)
-//     }, 5000)
-//   }, 5000)
-// }, 5000)
-
-
-        // function request(url, onSuccess) {
-        //   /*...*/
-        // }
-
-        // request('/api/users/1', function (user) {
-        //   request(`/api/photos/${user.id}/`, function (photo) {
-        //     request(`/api/crop/${photo.id}/`, function (response) {
-        //       console.log(response)
-        //     })
-        //   })
-        // })
-
-//fetch
-
-// const textEditorState = {
-//   lastModified: "2023-01-09T12:15:00",
-//   blocks: [
-//     {
-//       type: "heading",
-//       data: {
-//         text: "Плани на 2023"
-//       }
-//     },
-//     {
-//       type: "paragraph",
-//       data: {
-//         text: "Перемога"
-//       }
-//     }
-//   ]
-// }
-
-// const response = await fetch('/api/save-text', {
-//    method: 'POST',
-//    body: JSON.stringify(textEditorState),
+// const promise = new Promise(function(resolve, reject) {
+// 	const data = ... // якась асинхронна операція - запит до БД, API тощо
+// 	resolve(data); // переводимо в стан 'fulfilled' і віддаємо назовні результат операції
 // })
 
+// // приклад створення промісу і обробки помилки
 
-// REST
+// const errorPromise = new Promise(function(resolve, reject) {
+// 	const data = ... // якась асинхронна операція - запит до БД, API тощо
+// 	reject(new Error('якась помилка')); // переводимо в стан 'rejected' і віддаємо назовні помилку
+// })
 
-            // Наприклад, метод та адреса для створення користувача
-            // могли б виглядати так:
-            // POST /api/users
+// метод .then
 
-            // Для отримання конкретного користувача:
-            // GET /api/users/1
-            // (Де 1 - це ID користувача.)
+	// псевдокод
 
-            // Для редагування даних про користувача:
-            // PATCH /api/users/1
+	// const id = 45;
 
-            // Для видалення даних:
-            // DELETE /api/users/1
+	// fetch(`https://swapi.dev/api/films/${id}/`)
+	// 	.then((movies => getActors(movies))
+	// 	.then((actors => renderActors(actors))
+
+// метод .catch
+
+	// псевдокод
+	// fetch(`https://swapi.dev/api/films/${id}/`)
+	// 	.then((movies => getActors(movies))
+	// 		.then((actors => renderActors(actors))
+	// 		.catch(function (error) {
+	// 		  renderErrorMessage(error)
+	// 		})
+	// 			.then((credits => anotherFunction(credits))
+	// 				.then((actors => renderActors(actors))
+	// 				.catch(function (error) {
+	// 				  renderErrorMessage(error)
+	// 				})
+
+// метод .finally
+
+// псевдокод
+	// let isLoading = true
+	// fetch(`https://swapi.dev/api/films/${id}/`)
+	// //
+	// .finally(function () {
+	//   isLoading = false
+	// })
+
+// приклад для оптимізації
+
+	// let isLoading = true
+	// sendForm()
+	// 	.then((res) => {
+	// 	    isLoading = false
+	// 	    alert('ok')
+	// 	})
+	// 	.catch((err) => {
+	// 	    isLoading = false
+	// 	    alert(`Помилка: ${err.message}`)
+	// 	})
+
+	// let isLoading = true
+	// sendForm()
+	// 	.then((res) => {
+	// 	    alert('ok')
+	// 	})
+	// 	.catch((err) => {
+	// 	    alert(`Помилка: ${err.message}`)
+	// 	})
+	// 	.finally(() => {
+	// 	    isLoading = false
+	// 	})
+
+// приклад для ланцюжків 
+
+// fetch('https://www.anapioficeandfire.com/api/houses?region=Dorne')
+// 	.then(function(response) {
+// 		return response.json();
+// 	})
+// 	.then(function(houses) {
+// 		console.log('houses -->', houses);
+// 		return fetch(houses[5].overlord)
+// 	})
+// 	.then(function(response) {
+// 		return response.json();
+// 	})
+// 	.then(function(overlord) {
+// 		console.log('overlord name -->', overlord.name);
+// 	})
+// 	.catch(function(error) {
+// 		console.log(`Щось пішло не так: ${error.message}`)
+// 	})
+
+
+// створення асинхронної функції з промісом
+
+// function earnAllMoney() {
+// 	return new Promise(function (resolve, reject) {
+// 	    const result = tryEarnAllMoney() // асинхронна операція
+// 	    if (result.ok) {
+// 	      resolve(result) // успіх → переводимо проміс в fulfilled і передаємо результат
+// 	    } else {
+// 	      reject(new Error(result)) // помилка → переводимо проміс в rejected
+// 	    }
+//   	})
+// }
+
+// earnAllMoney()
+// .then()
+// .catch()
+
+// fetch
+
+// fetch('http://jsonplaceholder.typicode.com/posts', {
+// 	method: 'POST',
+// 	body: //,
+// 	headers:
+// })
+
+// fetch('http://jsonplaceholder.typicode.com/posts')
+//   .then((response) => response.json())
+//   .then((data) => console.log(data))
+//   .catch()
+
+// приклад з обєктом options
+
+// const newPost = {
+//   title: 'Мої плани на вечір',
+//   body: 'поспати',
+//   userId: 1,
+// }
+
+// fetch('https://jsonplaceholder.typicode.com/posts', {
+//   method: 'POST', // тут можуть бути GET, PUT, DELETE
+//   body: JSON.stringify(newPost), // Тіло запиту в JSON-форматі
+//   headers: {
+//     // Додаємо необхідні заголовки
+//     'Content-type': 'application/json; charset=UTF-8',
+//   },
+//   credentials: 'include'
+// })
+//   .then((response) => response.json())
+//   .then((data) => {
+//     console.log(data)
+//   })
+
+// fetch('https://jsonplaceholder.typicode.com/there-is-no-such-route')
+// .then((response) => {
+// 	// перевіряємо успішність запиту і викидаємо помилку
+// 	if (!response.ok) {
+// 	  throw new Error('Error occurred!')
+// 	}
+
+// 	return response.json()
+// })
+// // Тепер попадемо сюди, бо повернулась помилка
+// .catch((err) => {
+// 	console.log(err)
+// }) // Error: Error occurred!
+
+// відміна запиту
+
+// const controller = new AbortController()
+
+// function fetchData() {
+//   return fetch('http://jsonplaceholder.typicode.com/posts', {
+//     signal: controller.signal,
+//   })
+//     .then((response) => response.json())
+//     .then((data) => console.log(data))
+//     .catch((e) => {
+//       console.log(e)
+//     })
+// }
+
+// fetchData()
+
+// // Якщо запит ще не був завершений, то він буде перерваний
+// // перерваний fetch поверне проміс з помилкю
+// controller.abort()
+
+// завантаження з результатом прогресу
+
+// fetch('https://i.imgur.com/C5QXZ7u.mp4').then(async (response) => {
+//   let received = 0
+
+//   // Отримуємо потік у змінну
+//   const reader = response.body.getReader()
+
+//   // Зчитуємо загальну кількість данних
+//   const contentLength = parseInt(response.headers.get('Content-Length'), 10)
+
+//   while (true) {
+//     // Після виклику read() повертається об'єкт, в якому
+//     // done - boolean-значення про те чи закінчилася інформація
+//     // value - масив байтів, які прийшли цього разу
+//     const { done, value } = await reader.read()
+
+//     if (done) {
+//       console.log('Отримано 100%');
+//       break
+//     }
+
+//     received += value.length/contentLength;
+
+//     console.log(`Отримано ${received*100}%`)
+//   }
+// })
+
+//JSON
+
+// {
+//   "brand": "Apple",
+//   "model": "iPhone 11 Pro",
+//   "isAvailable": true,
+//   "display": 5.8,
+//   "memories": [64, 256, 512],
+//   "features": {
+//     "tripleCamera": true,
+//     "faceId": true,
+//     "touchId": false,
+//     "eSIM": true
+//   }
+// }
+
+// 
+
+// const json =
+//   '{"name":"Luke Skywalker","height":"172","mass":"77","hair_color":"blond","skin_color":"fair","eye_color":"blue","birth_year":"19BBY","gender":"male"}'
+// const jedi = JSON.parse(json)
+
+// console.log(jedi.name)
+
+// console.log(jedi.gender)
+
+// console.log(jedi.birth_year)
+
+// const JSONedJedi = JSON.stringify(jedi);
+
+// console.log(JSONedJedi)
