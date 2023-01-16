@@ -1,243 +1,258 @@
 'use strict';
 
-// приклад створення промісу і обробки успішного запиту
+// Асинхронне програмування 3
 
-// const promise = new Promise(function(resolve, reject) {
-// 	const data = ... // якась асинхронна операція - запит до БД, API тощо
-// 	resolve(data); // переводимо в стан 'fulfilled' і віддаємо назовні результат операції
-// })
+// помилки і як їх створювати
 
-// // приклад створення промісу і обробки помилки
+// const commonError = new Error('Якась загальна помилка. Перевірте код')
 
-// const errorPromise = new Promise(function(resolve, reject) {
-// 	const data = ... // якась асинхронна операція - запит до БД, API тощо
-// 	reject(new Error('якась помилка')); // переводимо в стан 'rejected' і віддаємо назовні помилку
-// })
+// console.log(commonError.message)
+// // 'Якась загальна помилка. Перевірте код'
 
-// метод .then
+// console.log(commonError.name)
+// // 'Error'
 
-	// псевдокод
+// приклад синтаксичної помилки
+	
+	// console.log(;)
+	// SyntaxError: Unexpected token ';'
 
-	// const id = 45;
+	// console.log(()
+	// SyntaxError: missing ) after argument list
 
-	// fetch(`https://swapi.dev/api/films/${id}/`)
-	// 	.then((movies => getActors(movies))
-	// 	.then((actors => renderActors(actors))
+// приклад синтаксичної змінної
+	// console.log(ololo)
 
-// метод .catch
+// приклад помилки по типу
+	// console.log(null.length)
 
-	// псевдокод
-	// fetch(`https://swapi.dev/api/films/${id}/`)
-	// 	.then((movies => getActors(movies))
-	// 		.then((actors => renderActors(actors))
-	// 		.catch(function (error) {
-	// 		  renderErrorMessage(error)
-	// 		})
-	// 			.then((credits => anotherFunction(credits))
-	// 				.then((actors => renderActors(actors))
-	// 				.catch(function (error) {
-	// 				  renderErrorMessage(error)
-	// 				})
+// приклад помилки по діапазону
 
-// метод .finally
+	// new Array(100000000000)
 
-// псевдокод
-	// let isLoading = true
-	// fetch(`https://swapi.dev/api/films/${id}/`)
-	// //
-	// .finally(function () {
-	//   isLoading = false
-	// })
+// приклад URI помилки
 
-// приклад для оптимізації
+	// decodeURIComponent('%')
+//
+	
+	// eval('console.log(null.length)')
 
-	// let isLoading = true
-	// sendForm()
-	// 	.then((res) => {
-	// 	    isLoading = false
-	// 	    alert('ok')
-	// 	})
-	// 	.catch((err) => {
-	// 	    isLoading = false
-	// 	    alert(`Помилка: ${err.message}`)
-	// 	})
-
-	// let isLoading = true
-	// sendForm()
-	// 	.then((res) => {
-	// 	    alert('ok')
-	// 	})
-	// 	.catch((err) => {
-	// 	    alert(`Помилка: ${err.message}`)
-	// 	})
-	// 	.finally(() => {
-	// 	    isLoading = false
-	// 	})
-
-// приклад для ланцюжків 
-
-// fetch('https://www.anapioficeandfire.com/api/houses?region=Dorne')
-// 	.then(function(response) {
-// 		return response.json();
-// 	})
-// 	.then(function(houses) {
-// 		console.log('houses -->', houses);
-// 		return fetch(houses[5].overlord)
-// 	})
-// 	.then(function(response) {
-// 		return response.json();
-// 	})
-// 	.then(function(overlord) {
-// 		console.log('overlord name -->', overlord.name);
-// 	})
-// 	.catch(function(error) {
-// 		console.log(`Щось пішло не так: ${error.message}`)
-// 	})
-
-
-// створення асинхронної функції з промісом
-
-// function earnAllMoney() {
-// 	return new Promise(function (resolve, reject) {
-// 	    const result = tryEarnAllMoney() // асинхронна операція
-// 	    if (result.ok) {
-// 	      resolve(result) // успіх → переводимо проміс в fulfilled і передаємо результат
-// 	    } else {
-// 	      reject(new Error(result)) // помилка → переводимо проміс в rejected
-// 	    }
-//   	})
+// створення власних класів помилок
+	
+// class WrongDataTypeForSumError extends Error {
+//    constructor(message) {
+//      super(message)
+//      this.name = 'WrongDataTypeForSumError'
+//    }
 // }
 
-// earnAllMoney()
-// .then()
-// .catch()
+// function sum(a, b) {
+//   if (typeof a !== 'number' || typeof b !== 'number') {
+//     throw new WrongDataTypeForSumError('Невалідний тип даних для знаходження суми')
+//   }
 
-// fetch
-
-// fetch('http://jsonplaceholder.typicode.com/posts', {
-// 	method: 'POST',
-// 	body: //,
-// 	headers:
-// })
-
-// fetch('http://jsonplaceholder.typicode.com/posts')
-//   .then((response) => response.json())
-//   .then((data) => console.log(data))
-//   .catch()
-
-// приклад з обєктом options
-
-// const newPost = {
-//   title: 'Мої плани на вечір',
-//   body: 'поспати',
-//   userId: 1,
+//   return a + b;
 // }
 
-// fetch('https://jsonplaceholder.typicode.com/posts', {
-//   method: 'POST', // тут можуть бути GET, PUT, DELETE
-//   body: JSON.stringify(newPost), // Тіло запиту в JSON-форматі
-//   headers: {
-//     // Додаємо необхідні заголовки
-//     'Content-type': 'application/json; charset=UTF-8',
-//   },
-//   credentials: 'include'
-// })
-//   .then((response) => response.json())
-//   .then((data) => {
-//     console.log(data)
-//   })
+// sum(1, `2`);
 
-// fetch('https://jsonplaceholder.typicode.com/there-is-no-such-route')
-// .then((response) => {
-// 	// перевіряємо успішність запиту і викидаємо помилку
-// 	if (!response.ok) {
-// 	  throw new Error('Error occurred!')
+
+//try...catch
+	
+	// try {
+	//   someFunction();
+	//   anotherFunction();
+	// } catch (err) {
+	//   console.log('Піймався розбійнику! ', err.message);
+	//   console.log('10 год тюрми!');
+	// }
+
+	// try {
+	//   const six = 6;
+	//   console.log(six); 
+
+	//   six = 7; // помилка!
+
+	//   // з цього місця управління переходить до catch
+
+	//   const nine = 9; // не виконається
+	//   console.log(six + nine); // і це теж
+	// } catch (err) {
+	//   console.log('Піймався розбійнику!');  // обробляємо помилку
+	//   console.log('10 год тюрми!');
+	// }
+
+	// console.log('Що ж, можна і продовжити'); // 4. Буде виконуватись далі
+
+// try {
+//   webSocket.connect('ws://....');
+//   callMayThrowError();
+// } catch (err) {
+//   doSomeWithError(err);
+// } finally {
+// 	webSocket.disconnect('ws://....');
+// }
+
+// обробка помилок в catch
+
+// parse-module.js
+
+// 	// Є свій кастомний тип помилки
+// 	class ParsingError extends Error {
+// 	  ...
 // 	}
 
-// 	return response.json()
+// 	function parse(data) {
+// 	  	try {
+// 	    	parseData(data)
+// 	  	} catch (err) {
+// 		    if (err.name !== 'ParsingError') {
+// 		      // інший тип помилки прокидуємо далі
+// 		      throw err
+// 		    }
+
+// 		    logError(err)
+// 		}
+// 	}
+
+// 	export default parse;
+
+// // це інший файл
+
+// import parse from 'parse-module'
+
+// try {
+//   parse(data)
+// } catch (e) {
+//   console.log('Невідома помилка парсингу:', e)
+// }
+
+// try...catch  та асинхронний код
+
+// try {
+//   // Код здійсниться коректно, бо звідси повернувся проміс
+//   Promise.reject('err')
+// } catch (err) {
+//   // помилка не спіймається
+//   console.log('Піймався розбійнику! ', err);
+// }
+
+// try {
+//   // Код здійсниться коректно, бо таймаут встановився без помилок
+//   setTimeout(() => {
+//     throw Error('10 год тюрми');
+//   }, 5000);
+// } catch (err) {
+//   // помилка з таймауту не спіймається
+//   console.log('Піймався розбійнику! ', err);
+// }
+
+// через async/await
+
+// async function handlePromise() {
+//   try {
+//     // проміс повернувся з помилкою
+//     await Promise.reject('err');
+//   } catch (err) {
+//     // помилка спіймається
+//     console.log('Піймався розбійнику! ', err);
+//   }
+// }
+
+// handlePromise();
+
+	// function wait(ms) {
+	//   return new Promise((resolve) => setTimeout(resolve, ms));
+	// }
+
+	// async function timeout(fn, ms) {
+	//   try {
+	//     // чекаємо таймаут
+	//     await wait(ms);
+
+	//     // і виконуємо функцію
+	//     fn();
+	//   } catch (err) {
+	//     // Ловимо помилку
+	//     console.log('Піймався розбійнику! ', err);
+	//   }
+	// }
+
+	// timeout(() => {
+	//   throw Error('10 год тюрми');
+	// }, 5000)
+
+
+// async/await
+
+	// async function getStarWarsMovies() {
+	//   return 1;
+	// }
+
+	// console.log(getStarWarsMovies());
+
+	// console.log('ololo');
+
+// async function getStarWarsMovies(id) {
+// 	const response = await fetch(`https://swapi.dev/api/films/${id}`);
+// 	console.log('отримали відповідь від ендпоїнту - ', response);
+// 	return response.json();
+// }
+
+// const movies = getStarWarsMovies(1).then((movie) => {
+// 	console.log(movie.title);
+// 	console.log(movie.characters);
 // })
-// // Тепер попадемо сюди, бо повернулась помилка
-// .catch((err) => {
-// 	console.log(err)
-// }) // Error: Error occurred!
 
-// відміна запиту
+// приклад на промісах і на async/await
 
-// const controller = new AbortController()
-
-// function fetchData() {
-//   return fetch('http://jsonplaceholder.typicode.com/posts', {
-//     signal: controller.signal,
-//   })
-//     .then((response) => response.json())
-//     .then((data) => console.log(data))
-//     .catch((e) => {
-//       console.log(e)
+// function getMainActorProfileFromMovie(id) {
+//   return fetch(`https://swapi.dev/api/films/${id}/`)
+//     .then((movieResponse) => {
+//       return movieResponse.json();
+//     })
+//     .then((movie) => {
+//       const characterUrl = movie.characters[0].split("//")[1];
+//       return fetch(`https://${characterUrl}`);
+//     })
+//     .then((characterResponse) => {
+//       return characterResponse.json();
+//     })
+//     .catch((err) => {
+//       console.error("Помилка - ", err);
 //     })
 // }
 
-// fetchData()
-
-// // Якщо запит ще не був завершений, то він буде перерваний
-// // перерваний fetch поверне проміс з помилкю
-// controller.abort()
-
-// завантаження з результатом прогресу
-
-// fetch('https://i.imgur.com/C5QXZ7u.mp4').then(async (response) => {
-//   let received = 0
-
-//   // Отримуємо потік у змінну
-//   const reader = response.body.getReader()
-
-//   // Зчитуємо загальну кількість данних
-//   const contentLength = parseInt(response.headers.get('Content-Length'), 10)
-
-//   while (true) {
-//     // Після виклику read() повертається об'єкт, в якому
-//     // done - boolean-значення про те чи закінчилася інформація
-//     // value - масив байтів, які прийшли цього разу
-//     const { done, value } = await reader.read()
-
-//     if (done) {
-//       console.log('Отримано 100%');
-//       break
-//     }
-
-//     received += value.length/contentLength;
-
-//     console.log(`Отримано ${received*100}%`)
-//   }
-// })
-
-//JSON
-
-// {
-//   "brand": "Apple",
-//   "model": "iPhone 11 Pro",
-//   "isAvailable": true,
-//   "display": 5.8,
-//   "memories": [64, 256, 512],
-//   "features": {
-//     "tripleCamera": true,
-//     "faceId": true,
-//     "touchId": false,
-//     "eSIM": true
+// async function getMainActorProfileFromMovie(id) {
+//   try {
+//     const movieResponse = await fetch(`https://swapi.dev/api/films/${id}/`);
+//     const movie = await movieResponse.json();
+//     const characterUrl = movie.characters[0].split('//')[1];
+//     const characterResponse = await fetch(`https://${characterUrl}`);
+//     return characterResponse.json();
+//   } catch (err) {
+//     console.error('Помилка - ', err);
 //   }
 // }
 
-// 
+// getMainActorProfileFromMovie(1).then((profile) => {
+//   console.log(profile);
+// })
 
-// const json =
-//   '{"name":"Luke Skywalker","height":"172","mass":"77","hair_color":"blond","skin_color":"fair","eye_color":"blue","birth_year":"19BBY","gender":"male"}'
-// const jedi = JSON.parse(json)
+// комбінування 
 
-// console.log(jedi.name)
+// async function getUser(){
+//   // повертає інформацію про користувача
+// }
 
-// console.log(jedi.gender)
+// async function getNews(){
+//   // повертає список новин
+// }
 
-// console.log(jedi.birth_year)
+// // const user = await getUser();
+// // const news = await getNews();
 
-// const JSONedJedi = JSON.stringify(jedi);
-
-// console.log(JSONedJedi)
+// const [user, news] = await Promise.all([
+//   getUser(),
+//   getNews()
+// ])
