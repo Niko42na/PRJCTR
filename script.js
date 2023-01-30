@@ -1,191 +1,142 @@
 'use strict';
 
-// Ітератори та генератори
+// сети, мапи та деструктиризаційне присвоєння
 
-// function makeIterator(array) {
-// 	let nextIndex = 0;
+// сети
 
-// 	  return {
-// 	    next: function () {
-// 	      if (nextIndex < array.length) {
-// 	        const result = { value: array[nextIndex], done: false };
-// 	        nextIndex++
-// 	        return result;
-// 	      } else {
-// 	        return { done: true };
-// 	      }
-// 	    }
-// 	  }
+	// const uniqueIds = new Set();
+
+	// uniqueIds.add(123);
+	// uniqueIds.add(456);
+
+	// console.log('uniqueIds --> ', uniqueIds);
+
+// порівняння з масивом
+
+// const typicalArray = [];
+// const typicaSet = new Set();
+		
+// function updateColections(array, set, value) {
+// 	array.push(value);
+//   	set.add(value);
+//   console.log('updated array --> ', array);
+//   console.log('updated set --> ', set);
 // }
 
-// let iterator = makeIterator([
-// 	'Еней', 
-// 	'був', 
-// 	'парубок', 
-// 	'моторний', 
-// 	'і', 
-// 	'хлопець', 
-// 	'хоч', 
-// 	'куди', 
-// 	'козак']
-// );
+// створення непорожнього сету
 
-// for..of
+// const filledSet = new Set([1,2,3,3,3,3,3,3, true, 'hello']);
 
-// const array = ['a', 'b', 'c', 'd'];
-// console.log(array)
-// for (let value of array) {
-// 	console.log('--> ', value);
+// // console.log(filledSet);
+
+// // filledSet.forEach(function(value) {
+// // 	console.log(value);
+// // });
+
+// for (let value of filledSet) {
+// 	console.log(value);
 // }
 
+// специфіка роботи з непримітивними типами
 
-// приклад перетворення обєкту в ітерабельний
-// const user = {
-//    name: 'Diego',
-//    age: 27,
-//    gender: 'male',
-//    interests: ['hiking', 'gaming'],
-// }
+// const cheapShirt = { size: 'L', color: 'white' };
+// // const fancyShirt = { size: 'L', color: 'white' };
+// const fancyShirt = cheapShirt;
 
+// console.log(cheapShirt === fanccheapShirtyShirt);
 
-// user[Symbol.iterator] = function() {
-// 	const properties = Object.keys(this);
+// const shirtsSet = new Set([cheapShirt, fancyShirt]);
 
-// 	let count = 0;
-
-// 	return{
-// 		next() {
-// 			if (count < properties.length) {
-// 				const key = properties[count];
-// 				let result = { done: false, value: user[key]};
-// 				count++;
-// 				return result;
-// 			} else {
-// 				return {done: true};
-// 			}
-// 		}
-// 	}
-// }
-
-// for (let x of user) {
-// 	console.log(x);
-// }
+// console.log(shirtsSet);
 
 // практичний приклад використання
 
-// const limitation = {
-// 	from: 3,
-// 	to: 9
+// const unUniqueArray = [1,2,3,4,5,6,7,7,6,6,2,5,1,6,0,12,56,23];
+// const uniqueSet = new Set(unUniqueArray);
+// console.log(uniqueSet);
+
+// Map
+
+// const someData = new Map();
+
+// someData.set('someKey', 'someValue');
+// someData.set(true, 'some boolean stuff');
+// someData.set(123, 'something with number');
+
+// console.log(someData);
+
+// const filledMap = new Map([['someKey', 666], [false, false], [{hasValue: true}, 'someText']]);
+
+// console.log(filledMap
+
+// обхід
+
+// const filledMap = new Map([['someKey', 666], [1, false],  [1, true]]);
+
+// for(let [key, value] of filledMap) {
+// 	console.log(`${key} = ${value}`);
 // }
 
-// function limitationIterator(limitationObj) {
-// 	let current = limitationObj.from;
+// filledMap.forEach((value, key) => {
+// 	console.log(`${key} = ${value}`);
+// })
 
-// 	return {
-// 		next: function() {
-// 			return current <= limitationObj.to ? {value: current++, done: false} : {done: true}
-// 		}
-// 	}
-// } 
-
-// const numberCount = limitationIterator(limitation);
-
-// console.log(numberCount.next().value);
-// console.log(numberCount.next().value);
-// console.log(numberCount.next().value);
-// console.log(numberCount.next().value);
-// console.log(numberCount.next().value);
-// console.log(numberCount.next().value);
-// console.log(numberCount.next().value);
-// console.log(numberCount.next().value);
-
-// вбудовані ітератори
-
-// const numbers = [1,2,3,4,5,6,7,8,9];
-
-// const iterator = numbers[Symbol.iterator]();
-
-// console.log(iterator.next());
-
-// console.log(iterator.next());
-
-// console.log(iterator.next());
-
-// console.log(iterator.next());
-
-// console.log(iterator.next());
-
-// console.log(iterator.next());
-
-// console.log(iterator.next());
-// console.log(iterator.next());
-// console.log(iterator.next());
-// console.log(iterator.next());
-
-// const [valueA, valueB] = [10, 20, 30];
-
-// console.log(valueA);
-// console.log(valueB);
-
-// const arr = Array.from('Матильда');
-
-// console.log(arr);
-
-// const arr = [...'Доздроперма'];
-// console.log(arr);
-
-// function* sayNames() {
-// 	yield 'Матвій';
-// 	yield 'Марта';
-// 	yield 'Олекса';
-// 	yield 'Емма';
-// 	yield 'Іван';
-// 	yield 'Сергій';
-// 	return 'Микола';
-// }
-
-// const name = sayNames();
-
-// // console.log(name.next().value);
-// // console.log(name.next().value);
-// // console.log(name.next().value);
-// // console.log(name.next().value);
-// // console.log(name.next().value);
-// // console.log(name.next().value);
-// // console.log(name.next().value);
-// // console.log(name.next().value);
-
-// for(let value of name) {
-// 	console.log(value);
-// }
+// console.log('filledMap --> ', filledMap);
 
 
-//приклад практичного використання
+// const dataObject = { position: 'left' };
+// const sameObject = { position: 'left' };
 
-// function* generateID(limit) {
-// 	let index = 1;
+// // console.log(sameObject === dataObject);
 
-// 	while(index <= limit) {
-// 		yield index++;
-// 	}
-// }
+// const map = new Map();
+// map.set(dataObject, 'value for dataObject 123');
 
-// const gen = generateID(42);
+// console.log(map.get({ position: 'left' }));
 
-// for (let value of gen) {
-// 	console.log(value);
-// }
+// const numberArray = [10,20, 30];
 
+// // let a = numberArray[0];
+// // let b = numberArray[1];
+// // let c = numberArray[2];
 
-// приклад реалізації limitation через генератор:
-	
-	// function* limitationGenerator(start, end) {
-	// 	for(let i = start; i <= end; i++) yield i;
-	// }
+// let [a, b, c = "too short"] = numberArray;
 
-	// const numberCount = limitationGenerator(1, 15);
+// console.log(a);
+// console.log(b);
+// console.log(c);
 
-	
-	// for (let value of numberCount) {
-	// 	console.log(value);
-	// }
+// let guest = 'Іван';
+// let admin = 'Петро';
+
+// [guest, admin] = [admin, guest];
+
+// console.log('guest --> ', guest);
+// console.log('admin --> ', admin);
+
+// const donors = ['Іван', 'Петро', 'Василь'];
+
+// const anotherDonors = ['Емма', 'Марта', [[['Василина'], 'Магдалина']]];
+
+// const newArray = [...anotherDonors];
+
+// console.log(newArray);
+
+const user = {
+	name: 'Ivan',
+	age: 28,
+	favoriteColor: 'blue'
+}
+
+const anotherUser = {
+	name: 'Yurij',
+}
+
+// const { name: userName = 'Петро', age: userAge, favoriteColor } = user;
+// console.log(userName);
+// console.log(userAge);
+// console.log(favoriteColor);
+
+const persona = {...anotherUser, nickName: 'superMan', ...user};
+
+console.log(persona);
